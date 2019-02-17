@@ -1,0 +1,14 @@
+# features/03-interview/02-health-check.feature
+version: '3'
+services:
+
+  weathertracker:
+    build: .
+    ports:
+      - "8000:8000"
+    image: weathertracker:latest
+    healthcheck:
+        test: curl --fail -s http://localhost:8000/healthz || exit 1
+        interval: 1m30s
+        timeout: 10s
+        retries: 3

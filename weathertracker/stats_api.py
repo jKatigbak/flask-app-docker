@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request
 from flask.views import MethodView
 from werkzeug.exceptions import abort
 from weathertracker.stats import get_stats
@@ -6,7 +6,6 @@ from weathertracker.utils.conversion import (
     convert_to_datetime,
     DatetimeConversionException,
 )
-
 
 class StatsAPI(MethodView):
     # features/02-stats/01-get-stats.feature
