@@ -3,7 +3,7 @@ import json
 from flask import request, Response
 from flask.views import MethodView
 from weathertracker.measurement_store import add_measurement, get_measurement, query_measurements
-from weathertracker.utils.conversion import convert_to_datetime, DatetimeConversionException
+from weathertracker.utils.conversion import convert_to_datetime, DatetimeConversionException, normalize
 
 
 class MeasurementsAPI(MethodView):
@@ -12,23 +12,22 @@ class MeasurementsAPI(MethodView):
     def post(self):
 
         data = request.get_json()
+        print("initial json data: {}".format(data))
 
-        print(data)
-
-        if "timestamp" not in data.keys() or data["timestamp"] is None:
-            date = data["timestamp"]
-            if date:
+        if "timestamp" in data.keys():
+            if data["timestamp"]:
                 try:
-                    if not convert_to_datetime(date):
+                    if not convert_to_datetime(data["timestamp"]):
                         return Response(status=400)
                 except (ValueError, OverflowError):
                     return Response(status=400)
-
+        else:
             return Response(status=400)
 
-        response = add_measurement(data)
+        normalized = normalize(data)
 
-        return response
+        print("normalized json data: {}".format(normalized))
+        return add_measurement(normalized)
 
     # features/01-measurements/02-get-measurement.feature
     def get(self, timestamp=None):

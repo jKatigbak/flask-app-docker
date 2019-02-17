@@ -38,7 +38,7 @@ def set_new_data():
     with open(DATA_STORE, "w") as json_file:
         json.dump({"data": []}, json_file)
 
-    print("data backed up - {}".format(new_path))
+
     print("gracefully shut down...")
 
 

@@ -1,44 +1,33 @@
 import json
 import os
+import time
+
 import dateutil
-from flask import Response, abort
-from weathertracker.utils.conversion import ensure_float, convert_to_datetime, get_datastore
+from flask import Response, abort, jsonify
+from weathertracker.utils.conversion import ensure_float, convert_to_datetime, get_datastore, normalize
 
 
 package_dir = os.path.dirname(os.path.abspath(__file__))
 data_store = os.path.join(package_dir, 'datastore/testdata.json')
 
 # features/03-interview/03-accurate-reporting.feature
-def normalize(data):
-    d = {}
-    try:
-
-        for key, value in data.items():
-            if key != "timestamp":
-                if ensure_float(value):
-                    d[key] = round(float(value), 1)
-                else:
-                    abort(status=400)
-            elif key == "timestamp":
-                d[key] = value
-
-    except ValueError:
-        abort(status=400)
-    return d
 
 
 def add_measurement(data):
 
-    normalized = normalize(data)
-
     store = get_datastore()
 
-    store.append(normalized)
+    print("appending {} to {}".format(data, store))
+    store.append(data)
 
-    with open(data_store, "w") as json_file:
+    print("------ > ", store)
+
+    with open(data_store, 'w') as json_file:
+        print("writing to datastore")
         json.dump({"data": store}, json_file)
 
-    return Response(status=200, headers={"location":"/measurements/{}".format(normalized["timestamp"])})
+
+    return Response(status=201, headers={"location":"/measurements/{}".format(data["timestamp"])})
 
 
 def get_measurement(date):
@@ -49,9 +38,9 @@ def get_measurement(date):
         time = dateutil.parser.parse(d["timestamp"]).isoformat()
 
         if time == str(date.isoformat()):
-            return Response(json.dumps(d), status=201)
+            return Response(json.dumps(d), status=200)
 
-    return Response(status=404)
+    abort(404)
 
 
 def query_measurements(start_date, end_date):
