@@ -1,0 +1,1122 @@
+node --no-warnings \
+	/Users/crazy/PycharmProjects/untitled1/weather-tracker-alk84fk99gr/node_modules/.bin/take-home-integration-test \
+	features \
+	--check-new \
+	--command "/Users/crazy/PycharmProjects/untitled1/venv/bin/python  run.py" \
+	--port 8000 \
+	--out-file integration-test.log \
+	-- \
+	--tags 'not @skip'
+[31m✘ Scenario: Add a measurement with valid (numeric) values[39m
+[31m[39m[32m  ✔ When I submit a new measurement as follows:[39m
+[32m[39m        | timestamp                  | temperature | dewPoint | precipitation |
+        | "2015-09-01T16:00:00.000Z" | 27.1        | 16.7     | 0             |
+[31m  ✘ Then the response has a status code of 201[39m
+[31m[39m    [31mexpected { Object (_readableState, readable, ...) } to have property 'statusCode' of 201, but got 400[39m
+        [31m+ expected[39m [32m- actual[39m
+
+        [32m-400[39m
+        [31m+201[39m
+
+[36m  - And the Location header has the path "/measurements/2015-09-01T16:00:00.000Z"[39m
+[36m[39m
+      [7m[1m═════ begin console log ═════[22m[27m
+       * Serving Flask app "weathertracker" (lazy loading)
+       * Environment: production
+         WARNING: Do not use the development server in a production environment.
+         Use a production WSGI server instead.
+       * Debug mode: off
+       * Running on http://0.0.0.0:8000/ (Press CTRL+C to quit)
+      127.0.0.1 - - [16/Feb/2019 22:47:14] "POST /measurements HTTP/1.1" 400 -
+      data backed up - /Users/crazy/PycharmProjects/untitled1/weather-tracker-alk84fk99gr/weathertracker/datastore/testdata.json-2019-02-16
+      gracefully shut down...
+
+      [7m[1m══════ end console log ══════[22m[27m
+
+      [7m[1m═════ begin request log ═════[22m[27m
+      [ { type: [32m'request'[39m,
+          data:
+           { debugId: [33m1[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m93[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:00:00.000Z","temperature":27.1,"dewPoint":16.7,"precipitation":0}'[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m1[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:14 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } } ]
+      [7m[1m══════ end request log ══════[22m[27m
+
+[32m✔ Scenario: Cannot add a measurement with invalid values[39m
+[32m[39m[32m✔ Scenario: Cannot add a measurement without a timestamp[39m
+[32m[39m[31m✘ Scenario: Get a specific measurement[39m
+[31m[39m[31m  ✘ Given I have submitted new measurements as follows:[39m
+[31m[39m        | timestamp                  | temperature | dewPoint | precipitation |
+        | "2015-09-01T16:00:00.000Z" | 27.1        | 16.7     | 0             |
+        | "2015-09-01T16:10:00.000Z" | 27.3        | 16.9     | 0             |
+        | "2015-09-01T16:20:00.000Z" | 27.5        | 17.1     | 0             |
+        | "2015-09-01T16:30:00.000Z" | 27.4        | 17.3     | 0             |
+        | "2015-09-01T16:40:00.000Z" | 27.2        | 17.2     | 0             |
+        | "2015-09-02T16:00:00.000Z" | 28.1        | 18.3     | 0             |
+    [31mCould not insert measurement, got code 400. Response body: [39m
+    [31mundefined[39m
+[36m  - When I get a measurement for "2015-09-01T16:20:00.000Z"[39m
+[36m[39m[36m  - Then the response has a status code of 200[39m
+[36m[39m[36m  - And the response body is:[39m
+[36m[39m        | timestamp                  | temperature | dewPoint | precipitation |
+        | "2015-09-01T16:20:00.000Z" | 27.5        | 17.1     | 0             |
+
+      [7m[1m═════ begin console log ═════[22m[27m
+       * Serving Flask app "weathertracker" (lazy loading)
+       * Environment: production
+         WARNING: Do not use the development server in a production environment.
+         Use a production WSGI server instead.
+       * Debug mode: off
+       * Running on http://0.0.0.0:8000/ (Press CTRL+C to quit)
+      127.0.0.1 - - [16/Feb/2019 22:47:33] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:33] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:33] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:33] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:33] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:33] "POST /measurements HTTP/1.1" 400 -
+      data backed up - /Users/crazy/PycharmProjects/untitled1/weather-tracker-alk84fk99gr/weathertracker/datastore/testdata.json-2019-02-16
+      gracefully shut down...
+
+      [7m[1m══════ end console log ══════[22m[27m
+
+      [7m[1m═════ begin request log ═════[22m[27m
+      [ { type: [32m'request'[39m,
+          data:
+           { debugId: [33m4[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m93[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:00:00.000Z","temperature":27.1,"dewPoint":16.7,"precipitation":0}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m5[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m93[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:10:00.000Z","temperature":27.3,"dewPoint":16.9,"precipitation":0}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m6[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m93[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:20:00.000Z","temperature":27.5,"dewPoint":17.1,"precipitation":0}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m7[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m93[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:30:00.000Z","temperature":27.4,"dewPoint":17.3,"precipitation":0}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m8[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m93[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:40:00.000Z","temperature":27.2,"dewPoint":17.2,"precipitation":0}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m9[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m93[39m },
+             body:
+              [32m'{"timestamp":"2015-09-02T16:00:00.000Z","temperature":28.1,"dewPoint":18.3,"precipitation":0}'[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m4[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:33 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m5[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:33 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m6[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:33 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m7[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:33 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m8[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:33 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m9[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:33 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } } ]
+      [7m[1m══════ end request log ══════[22m[27m
+
+[31m✘ Scenario: Get a measurement that does not exist[39m
+[31m[39m[31m  ✘ Given I have submitted new measurements as follows:[39m
+[31m[39m        | timestamp                  | temperature | dewPoint | precipitation |
+        | "2015-09-01T16:00:00.000Z" | 27.1        | 16.7     | 0             |
+        | "2015-09-01T16:10:00.000Z" | 27.3        | 16.9     | 0             |
+        | "2015-09-01T16:20:00.000Z" | 27.5        | 17.1     | 0             |
+        | "2015-09-01T16:30:00.000Z" | 27.4        | 17.3     | 0             |
+        | "2015-09-01T16:40:00.000Z" | 27.2        | 17.2     | 0             |
+        | "2015-09-02T16:00:00.000Z" | 28.1        | 18.3     | 0             |
+    [31mCould not insert measurement, got code 400. Response body: [39m
+    [31mundefined[39m
+[36m  - When I get a measurement for "2015-09-01T16:50:00.000Z"[39m
+[36m[39m[36m  - Then the response has a status code of 404[39m
+[36m[39m
+      [7m[1m═════ begin console log ═════[22m[27m
+       * Serving Flask app "weathertracker" (lazy loading)
+       * Environment: production
+         WARNING: Do not use the development server in a production environment.
+         Use a production WSGI server instead.
+       * Debug mode: off
+       * Running on http://0.0.0.0:8000/ (Press CTRL+C to quit)
+      127.0.0.1 - - [16/Feb/2019 22:47:39] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:39] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:39] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:39] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:39] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:39] "POST /measurements HTTP/1.1" 400 -
+      data backed up - /Users/crazy/PycharmProjects/untitled1/weather-tracker-alk84fk99gr/weathertracker/datastore/testdata.json-2019-02-16
+      gracefully shut down...
+
+      [7m[1m══════ end console log ══════[22m[27m
+
+      [7m[1m═════ begin request log ═════[22m[27m
+      [ { type: [32m'request'[39m,
+          data:
+           { debugId: [33m10[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m93[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:00:00.000Z","temperature":27.1,"dewPoint":16.7,"precipitation":0}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m11[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m93[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:10:00.000Z","temperature":27.3,"dewPoint":16.9,"precipitation":0}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m12[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m93[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:20:00.000Z","temperature":27.5,"dewPoint":17.1,"precipitation":0}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m13[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m93[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:30:00.000Z","temperature":27.4,"dewPoint":17.3,"precipitation":0}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m14[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m93[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:40:00.000Z","temperature":27.2,"dewPoint":17.2,"precipitation":0}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m15[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m93[39m },
+             body:
+              [32m'{"timestamp":"2015-09-02T16:00:00.000Z","temperature":28.1,"dewPoint":18.3,"precipitation":0}'[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m10[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:39 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m11[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:39 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m12[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:39 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m13[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:39 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m14[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:39 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m15[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:39 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } } ]
+      [7m[1m══════ end request log ══════[22m[27m
+
+[31m✘ Scenario: Get stats for a well-reported metric[39m
+[31m[39m[31m  ✘ Given I have submitted new measurements as follows:[39m
+[31m[39m        | timestamp                  | temperature | dewPoint |
+        | "2015-09-01T16:00:00.000Z" | 27.1        | 16.9     |
+        | "2015-09-01T16:10:00.000Z" | 27.3        |          |
+        | "2015-09-01T16:20:00.000Z" | 27.5        | 17.1     |
+        | "2015-09-01T16:30:00.000Z" | 27.4        | 17.3     |
+        | "2015-09-01T16:40:00.000Z" | 27.2        |          |
+        | "2015-09-01T17:00:00.000Z" | 28.1        | 18.3     |
+    [31mCould not insert measurement, got code 400. Response body: [39m
+    [31mundefined[39m
+[36m  - When I get stats with parameters:[39m
+[36m[39m        | param        | value                    |
+        | stat         | min                      |
+        | stat         | max                      |
+        | stat         | average                  |
+        | metric       | temperature              |
+        | fromDateTime | 2015-09-01T16:00:00.000Z |
+        | toDateTime   | 2015-09-01T17:00:00.000Z |
+[36m  - Then the response has a status code of 200[39m
+[36m[39m[36m  - And the response body is an array of:[39m
+[36m[39m        | metric        | stat      | value |
+        | "temperature" | "min"     | 27.1  |
+        | "temperature" | "max"     | 27.5  |
+        | "temperature" | "average" | 27.3  |
+
+      [7m[1m═════ begin console log ═════[22m[27m
+       * Serving Flask app "weathertracker" (lazy loading)
+       * Environment: production
+         WARNING: Do not use the development server in a production environment.
+         Use a production WSGI server instead.
+       * Debug mode: off
+       * Running on http://0.0.0.0:8000/ (Press CTRL+C to quit)
+      127.0.0.1 - - [16/Feb/2019 22:47:45] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:45] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:45] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:45] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:45] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:45] "POST /measurements HTTP/1.1" 400 -
+      data backed up - /Users/crazy/PycharmProjects/untitled1/weather-tracker-alk84fk99gr/weathertracker/datastore/testdata.json-2019-02-16
+      gracefully shut down...
+
+      [7m[1m══════ end console log ══════[22m[27m
+
+      [7m[1m═════ begin request log ═════[22m[27m
+      [ { type: [32m'request'[39m,
+          data:
+           { debugId: [33m16[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:00:00.000Z","temperature":27.1,"dewPoint":16.9}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m17[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m59[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:10:00.000Z","temperature":27.3}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m18[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:20:00.000Z","temperature":27.5,"dewPoint":17.1}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m19[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:30:00.000Z","temperature":27.4,"dewPoint":17.3}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m20[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m59[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:40:00.000Z","temperature":27.2}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m21[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T17:00:00.000Z","temperature":28.1,"dewPoint":18.3}'[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m17[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:45 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m20[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:45 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m19[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:45 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m16[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:45 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m18[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:45 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m21[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:45 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } } ]
+      [7m[1m══════ end request log ══════[22m[27m
+
+[31m✘ Scenario: Get stats for a sparsely reported metric[39m
+[31m[39m[31m  ✘ Given I have submitted new measurements as follows:[39m
+[31m[39m        | timestamp                  | temperature | dewPoint |
+        | "2015-09-01T16:00:00.000Z" | 27.1        | 16.9     |
+        | "2015-09-01T16:10:00.000Z" | 27.3        |          |
+        | "2015-09-01T16:20:00.000Z" | 27.5        | 17.1     |
+        | "2015-09-01T16:30:00.000Z" | 27.4        | 17.3     |
+        | "2015-09-01T16:40:00.000Z" | 27.2        |          |
+        | "2015-09-01T17:00:00.000Z" | 28.1        | 18.3     |
+    [31mCould not insert measurement, got code 400. Response body: [39m
+    [31mundefined[39m
+[36m  - When I get stats with parameters:[39m
+[36m[39m        | param        | value                    |
+        | stat         | min                      |
+        | stat         | max                      |
+        | stat         | average                  |
+        | metric       | dewPoint                 |
+        | fromDateTime | 2015-09-01T16:00:00.000Z |
+        | toDateTime   | 2015-09-01T17:00:00.000Z |
+[36m  - Then the response has a status code of 200[39m
+[36m[39m[36m  - And the response body is an array of:[39m
+[36m[39m        | metric     | stat      | value |
+        | "dewPoint" | "min"     | 16.9  |
+        | "dewPoint" | "max"     | 17.3  |
+        | "dewPoint" | "average" | 17.1  |
+
+      [7m[1m═════ begin console log ═════[22m[27m
+       * Serving Flask app "weathertracker" (lazy loading)
+       * Environment: production
+         WARNING: Do not use the development server in a production environment.
+         Use a production WSGI server instead.
+       * Debug mode: off
+       * Running on http://0.0.0.0:8000/ (Press CTRL+C to quit)
+      127.0.0.1 - - [16/Feb/2019 22:47:51] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:51] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:51] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:51] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:51] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:51] "POST /measurements HTTP/1.1" 400 -
+      data backed up - /Users/crazy/PycharmProjects/untitled1/weather-tracker-alk84fk99gr/weathertracker/datastore/testdata.json-2019-02-16
+      gracefully shut down...
+
+      [7m[1m══════ end console log ══════[22m[27m
+
+      [7m[1m═════ begin request log ═════[22m[27m
+      [ { type: [32m'request'[39m,
+          data:
+           { debugId: [33m22[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:00:00.000Z","temperature":27.1,"dewPoint":16.9}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m23[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m59[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:10:00.000Z","temperature":27.3}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m24[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:20:00.000Z","temperature":27.5,"dewPoint":17.1}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m25[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:30:00.000Z","temperature":27.4,"dewPoint":17.3}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m26[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m59[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:40:00.000Z","temperature":27.2}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m27[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T17:00:00.000Z","temperature":28.1,"dewPoint":18.3}'[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m22[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:51 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m23[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:51 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m24[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:51 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m25[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:51 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m26[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:51 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m27[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:51 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } } ]
+      [7m[1m══════ end request log ══════[22m[27m
+
+[31m✘ Scenario: Get stats for a metric that has never been reported[39m
+[31m[39m[31m  ✘ Given I have submitted new measurements as follows:[39m
+[31m[39m        | timestamp                  | temperature | dewPoint |
+        | "2015-09-01T16:00:00.000Z" | 27.1        | 16.9     |
+        | "2015-09-01T16:10:00.000Z" | 27.3        |          |
+        | "2015-09-01T16:20:00.000Z" | 27.5        | 17.1     |
+        | "2015-09-01T16:30:00.000Z" | 27.4        | 17.3     |
+        | "2015-09-01T16:40:00.000Z" | 27.2        |          |
+        | "2015-09-01T17:00:00.000Z" | 28.1        | 18.3     |
+    [31mCould not insert measurement, got code 400. Response body: [39m
+    [31mundefined[39m
+[36m  - When I get stats with parameters:[39m
+[36m[39m        | param        | value                    |
+        | stat         | min                      |
+        | stat         | max                      |
+        | stat         | average                  |
+        | metric       | precipitation            |
+        | fromDateTime | 2015-09-01T16:00:00.000Z |
+        | toDateTime   | 2015-09-01T17:00:00.000Z |
+[36m  - Then the response has a status code of 200[39m
+[36m[39m[36m  - And the response body is an empty array[39m
+[36m[39m
+      [7m[1m═════ begin console log ═════[22m[27m
+       * Serving Flask app "weathertracker" (lazy loading)
+       * Environment: production
+         WARNING: Do not use the development server in a production environment.
+         Use a production WSGI server instead.
+       * Debug mode: off
+       * Running on http://0.0.0.0:8000/ (Press CTRL+C to quit)
+      127.0.0.1 - - [16/Feb/2019 22:47:57] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:57] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:57] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:57] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:57] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:47:57] "POST /measurements HTTP/1.1" 400 -
+      data backed up - /Users/crazy/PycharmProjects/untitled1/weather-tracker-alk84fk99gr/weathertracker/datastore/testdata.json-2019-02-16
+      gracefully shut down...
+
+      [7m[1m══════ end console log ══════[22m[27m
+
+      [7m[1m═════ begin request log ═════[22m[27m
+      [ { type: [32m'request'[39m,
+          data:
+           { debugId: [33m28[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:00:00.000Z","temperature":27.1,"dewPoint":16.9}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m29[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m59[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:10:00.000Z","temperature":27.3}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m30[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:20:00.000Z","temperature":27.5,"dewPoint":17.1}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m31[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:30:00.000Z","temperature":27.4,"dewPoint":17.3}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m32[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m59[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:40:00.000Z","temperature":27.2}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m33[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T17:00:00.000Z","temperature":28.1,"dewPoint":18.3}'[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m28[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:57 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m29[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:57 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m31[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:57 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m30[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:57 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m32[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:57 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m33[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:47:57 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } } ]
+      [7m[1m══════ end request log ══════[22m[27m
+
+[31m✘ Scenario: Get stats for more than one metric[39m
+[31m[39m[31m  ✘ Given I have submitted new measurements as follows:[39m
+[31m[39m        | timestamp                  | temperature | dewPoint |
+        | "2015-09-01T16:00:00.000Z" | 27.1        | 16.9     |
+        | "2015-09-01T16:10:00.000Z" | 27.3        |          |
+        | "2015-09-01T16:20:00.000Z" | 27.5        | 17.1     |
+        | "2015-09-01T16:30:00.000Z" | 27.4        | 17.3     |
+        | "2015-09-01T16:40:00.000Z" | 27.2        |          |
+        | "2015-09-01T17:00:00.000Z" | 28.1        | 18.3     |
+    [31mCould not insert measurement, got code 400. Response body: [39m
+    [31mundefined[39m
+[36m  - When I get stats with parameters:[39m
+[36m[39m        | param        | value                    |
+        | stat         | min                      |
+        | stat         | max                      |
+        | stat         | average                  |
+        | metric       | temperature              |
+        | metric       | dewPoint                 |
+        | metric       | precipitation            |
+        | fromDateTime | 2015-09-01T16:00:00.000Z |
+        | toDateTime   | 2015-09-01T17:00:00.000Z |
+[36m  - Then the response has a status code of 200[39m
+[36m[39m[36m  - And the response body is an array of:[39m
+[36m[39m        | metric        | stat      | value |
+        | "temperature" | "min"     | 27.1  |
+        | "temperature" | "max"     | 27.5  |
+        | "temperature" | "average" | 27.3  |
+        | "dewPoint"    | "min"     | 16.9  |
+        | "dewPoint"    | "max"     | 17.3  |
+        | "dewPoint"    | "average" | 17.1  |
+
+      [7m[1m═════ begin console log ═════[22m[27m
+       * Serving Flask app "weathertracker" (lazy loading)
+       * Environment: production
+         WARNING: Do not use the development server in a production environment.
+         Use a production WSGI server instead.
+       * Debug mode: off
+       * Running on http://0.0.0.0:8000/ (Press CTRL+C to quit)
+      127.0.0.1 - - [16/Feb/2019 22:48:04] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:48:04] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:48:04] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:48:04] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:48:04] "POST /measurements HTTP/1.1" 400 -
+      127.0.0.1 - - [16/Feb/2019 22:48:04] "POST /measurements HTTP/1.1" 400 -
+      data backed up - /Users/crazy/PycharmProjects/untitled1/weather-tracker-alk84fk99gr/weathertracker/datastore/testdata.json-2019-02-16
+      gracefully shut down...
+
+      [7m[1m══════ end console log ══════[22m[27m
+
+      [7m[1m═════ begin request log ═════[22m[27m
+      [ { type: [32m'request'[39m,
+          data:
+           { debugId: [33m34[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:00:00.000Z","temperature":27.1,"dewPoint":16.9}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m35[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m59[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:10:00.000Z","temperature":27.3}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m36[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:20:00.000Z","temperature":27.5,"dewPoint":17.1}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m37[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:30:00.000Z","temperature":27.4,"dewPoint":17.3}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m38[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m59[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T16:40:00.000Z","temperature":27.2}'[39m } },
+        { type: [32m'request'[39m,
+          data:
+           { debugId: [33m39[39m,
+             uri: [32m'http://127.0.0.1:8000/measurements'[39m,
+             method: [32m'post'[39m,
+             headers:
+              { host: [32m'127.0.0.1:8000'[39m,
+                accept: [32m'application/json'[39m,
+                [32m'content-type'[39m: [32m'application/json'[39m,
+                [32m'content-length'[39m: [33m75[39m },
+             body:
+              [32m'{"timestamp":"2015-09-01T17:00:00.000Z","temperature":28.1,"dewPoint":18.3}'[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m36[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:48:04 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m34[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:48:04 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m35[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:48:04 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m37[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:48:04 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m38[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:48:04 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } },
+        { type: [32m'response'[39m,
+          data:
+           { debugId: [33m39[39m,
+             headers:
+              { [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+                [32m'content-length'[39m: [32m'0'[39m,
+                server: [32m'Werkzeug/0.14.1 Python/3.7.1'[39m,
+                date: [32m'Sun, 17 Feb 2019 06:48:04 GMT'[39m },
+             statusCode: [33m400[39m,
+             body: [90mundefined[39m } } ]
+      [7m[1m══════ end request log ══════[22m[27m
+
+
+9 scenarios ([31m7 failed[39m, [32m2 passed[39m)
+30 steps ([31m7 failed[39m, [36m18 skipped[39m, [32m5 passed[39m)
+0m55.258s
+[1m[31m[39m[22m
+[1m[31mNo new scenarios found! [39m[22mBe sure to tag your new scenarios with [1m[36m@new[39m[22m.

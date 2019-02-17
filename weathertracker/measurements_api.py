@@ -1,3 +1,5 @@
+import json
+
 from flask import request, Response
 from flask.views import MethodView
 from weathertracker.measurement_store import add_measurement, get_measurement, query_measurements
@@ -9,11 +11,19 @@ class MeasurementsAPI(MethodView):
     # features/01-measurements/01-add-measurement.feature
     def post(self):
 
-        data = request.args.to_dict()
+        data = request.get_json()
 
-        date = data.get("timestamp")
+        print(data)
 
-        if date is None:
+        if "timestamp" not in data.keys() or data["timestamp"] is None:
+            date = data["timestamp"]
+            if date:
+                try:
+                    if not convert_to_datetime(date):
+                        return Response(status=400)
+                except (ValueError, OverflowError):
+                    return Response(status=400)
+
             return Response(status=400)
 
         response = add_measurement(data)
