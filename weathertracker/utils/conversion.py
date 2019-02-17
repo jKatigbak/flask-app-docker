@@ -3,13 +3,12 @@ import os
 from dateutil.parser import parse
 from werkzeug.exceptions import abort
 
-package_dir = os.path.dirname(os.path.abspath(__file__))
-DATA_STORE = os.path.join(package_dir, '../datastore/testdata.json')
 
 class DatetimeConversionException(Exception):
     pass
 
-
+# TODO ensure data is only in memory
+data_store = []
 
 def normalize(data):
     d = {}
@@ -51,11 +50,8 @@ def ensure_float(f):
 
 def get_datastore():
 
+    return data_store
 
-    with open(DATA_STORE) as json_file:
-        json_data = json.load(json_file)
-        data = json_data["data"]
-    return data
 
 
 

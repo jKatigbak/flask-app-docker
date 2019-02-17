@@ -12,7 +12,6 @@ class MeasurementsAPI(MethodView):
     def post(self):
 
         data = request.get_json()
-        print("initial json data: {}".format(data))
 
         if "timestamp" in data.keys():
             if data["timestamp"]:
@@ -26,7 +25,6 @@ class MeasurementsAPI(MethodView):
 
         normalized = normalize(data)
 
-        print("normalized json data: {}".format(normalized))
         return add_measurement(normalized)
 
     # features/01-measurements/02-get-measurement.feature
@@ -51,7 +49,7 @@ class MeasurementsAPI(MethodView):
             except DatetimeConversionException:
                 return Response(status=400)
 
-            return query_measurements(from_datetime, to_datetime )
+            return query_measurements(from_datetime, to_datetime)
 
 
         # nothing

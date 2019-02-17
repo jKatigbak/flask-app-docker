@@ -35,24 +35,24 @@ def get_stats(stats, metrics, from_datetime, to_datetime):
     is_avg = lambda c, l: c == u'average' and len(l) > 1
 
     for m in metrics:
-        vals = [v[m] for v in values if v[m] != '']
-        for choice in choices:
-            if choice in stats:
+        vals = [v[m] for v in values if m in v.keys() and v[m] != '']
+        for s in stats:
+            print(m, s, vals)
+            if s in choices:
                 try:
                     action = None
-                    if is_avg(choice, vals):
-                        action = round(float(get_avg(m, choice, vals)), 1)
+                    if is_avg(s, vals):
+                        action = round(float(get_avg(m, s, vals)), 1)
 
-                    elif is_max(choice):
+                    elif is_max(s):
                         action = get_max(vals)
 
-                    elif is_min(choice):
+                    elif is_min(s):
                         action = get_min(vals)
                     if action is not None:
-                        response_data.append([m, choice, action])
+                        response_data.append({"metric": m, "stat": s, "value": action})
 
                 except(ValueError, TypeError):
                     pass
 
-    print(response_data)
     return Response(json.dumps(response_data), status=200)
