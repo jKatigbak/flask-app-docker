@@ -1,5 +1,4 @@
-import json
-import os
+import dateutil
 from dateutil.parser import parse
 from werkzeug.exceptions import abort
 
@@ -13,13 +12,16 @@ data_store = []
 def normalize(data):
     d = {}
     try:
-
         for key, value in data.items():
             if key != "timestamp":
                 if ensure_float(value):
                     d[key] = round(float(value), 1)
+
+                # if key is present but value is null
                 elif value is None:
                     d[key] = ''
+
+                # anything else we can assume is NaN or bad data
                 else:
                     abort(status=400)
             elif key == "timestamp":
@@ -47,12 +49,10 @@ def ensure_float(f):
     except (ValueError, TypeError):
         return False
 
-
 def get_datastore():
-
     return data_store
 
-
-
+def parse_time(string):
+    return dateutil.parser.parse(string).isoformat()
 
 

@@ -3,7 +3,7 @@ import os
 
 import dateutil
 from flask import Response, abort, jsonify
-from weathertracker.utils.conversion import ensure_float, convert_to_datetime, get_datastore, normalize
+from weathertracker.utils.conversion import ensure_float, convert_to_datetime, get_datastore, normalize, parse_time
 
 
 def add_measurement(data):
@@ -17,7 +17,7 @@ def get_measurement(date):
 
     data = get_datastore()
     for d in data:
-        time = dateutil.parser.parse(d["timestamp"]).isoformat()
+        time = parse_time(d["timestamp"])
 
         if time == str(date.isoformat()):
             return Response(json.dumps(d), status=200)
@@ -35,7 +35,7 @@ def query_measurements(start_date, end_date):
     response = []
 
     for d in data:
-        time = dateutil.parser.parse(d["timestamp"]).isoformat()
+        time = parse_time(d["timestamp"])
         if start <= time < end:
             response.append(d)
 
